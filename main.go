@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -38,7 +40,26 @@ func main() {
 		},
 	}
 
+	router.GET("/", func(c *gin.Context) {
+		jsonFile, err := os.Open("static/current.json")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, err)
+		}
+		defer jsonFile.Close()
+
+		byteValue, _ := ioutil.ReadAll(jsonFile)
+
+		var result map[string]interface{}
+		json.Unmarshal([]byte(byteValue), &result)
+
+		c.JSON(http.StatusOK, result)
+	})
+
 	router.GET("/current", func(c *gin.Context) {
+		c.JSON(http.StatusOK, currentWords)
+	})
+
+	router.GET("/all", func(c *gin.Context) {
 		c.JSON(http.StatusOK, currentWords)
 	})
 
