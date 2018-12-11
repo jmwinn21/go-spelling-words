@@ -1,0 +1,7 @@
+{
+  "name": "Spelling words api",
+  "description": "Provides a list of spelling words as json for an iOS shortcut",
+  "keywords": ["shortcuts", "go", "ios"],
+  "website": "http://github.com/jmwinn21/go-spelling-words",
+  "repository": "http://github.com/jmwinn21/go-spelling-words"
+}
