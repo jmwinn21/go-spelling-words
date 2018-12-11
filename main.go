@@ -25,8 +25,16 @@ func main() {
 
 	currentWords := WordsResponse{
 		Words: []string{
-			"test1",
-			"test2",
+			"triathlon",
+			"trilogy",
+			"trimester",
+			"trident",
+			"quadrangle",
+			"quartet",
+			"quart",
+			"pentagon",
+			"pentagram",
+			"quintuplet",
 		},
 	}
 
