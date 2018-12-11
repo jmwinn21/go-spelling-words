@@ -46,7 +46,7 @@ func main() {
 		c.JSON(http.StatusOK, output)
 	})
 
-	router.GET("/all", func(c *gin.Context) {
+	router.GET("/random", func(c *gin.Context) {
 		jsonFile, err := os.Open("static/all.json")
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
