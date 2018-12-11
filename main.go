@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
 
@@ -34,10 +35,15 @@ func main() {
 
 		byteValue, _ := ioutil.ReadAll(jsonFile)
 
-		var result map[string]interface{}
-		json.Unmarshal([]byte(byteValue), &result)
+		var result WordsResponse
+		var output WordsResponse
+		err = json.Unmarshal(byteValue, &result)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, err)
+		}
+		output.Words = Shuffle(result.Words)
 
-		c.JSON(http.StatusOK, result)
+		c.JSON(http.StatusOK, output)
 	})
 
 	router.GET("/all", func(c *gin.Context) {
@@ -49,11 +55,34 @@ func main() {
 
 		byteValue, _ := ioutil.ReadAll(jsonFile)
 
-		var result map[string]interface{}
-		json.Unmarshal([]byte(byteValue), &result)
+		var result WordsResponse
+		var output WordsResponse
+		err = json.Unmarshal(byteValue, &result)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, err)
+		}
+		output.Words = ShuffleSize(result.Words, 10)
 
-		c.JSON(http.StatusOK, result)
+		c.JSON(http.StatusOK, output)
 	})
 
 	router.Run(":" + port)
+}
+
+func Shuffle(vals []string) []string {
+	dest := make([]string, len(vals))
+	perm := rand.Perm(len(vals))
+	for i, v := range perm {
+		dest[v] = vals[i]
+	}
+	return dest
+}
+
+func ShuffleSize(vals []string, size int) []string {
+	dest := make([]string, len(vals))
+	perm := rand.Perm(len(vals))
+	for i, v := range perm {
+		dest[v] = vals[i]
+	}
+	return dest[0:size]
 }
