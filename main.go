@@ -25,21 +25,6 @@ func main() {
 	router := gin.New()
 	router.Use(gin.Logger())
 
-	currentWords := WordsResponse{
-		Words: []string{
-			"triathlon",
-			"trilogy",
-			"trimester",
-			"trident",
-			"quadrangle",
-			"quartet",
-			"quart",
-			"pentagon",
-			"pentagram",
-			"quintuplet",
-		},
-	}
-
 	router.GET("/", func(c *gin.Context) {
 		jsonFile, err := os.Open("static/current.json")
 		if err != nil {
@@ -55,12 +40,19 @@ func main() {
 		c.JSON(http.StatusOK, result)
 	})
 
-	router.GET("/current", func(c *gin.Context) {
-		c.JSON(http.StatusOK, currentWords)
-	})
-
 	router.GET("/all", func(c *gin.Context) {
-		c.JSON(http.StatusOK, currentWords)
+		jsonFile, err := os.Open("static/all.json")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, err)
+		}
+		defer jsonFile.Close()
+
+		byteValue, _ := ioutil.ReadAll(jsonFile)
+
+		var result map[string]interface{}
+		json.Unmarshal([]byte(byteValue), &result)
+
+		c.JSON(http.StatusOK, result)
 	})
 
 	router.Run(":" + port)
