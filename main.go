@@ -23,6 +23,9 @@ func main() {
 		log.Fatal("$PORT must be set")
 	}
 
+	var result WordsResponse
+	var output WordsResponse
+
 	router := gin.New()
 	router.Use(gin.Logger())
 
@@ -35,8 +38,6 @@ func main() {
 
 		byteValue, _ := ioutil.ReadAll(jsonFile)
 
-		var result WordsResponse
-		var output WordsResponse
 		err = json.Unmarshal(byteValue, &result)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
@@ -55,8 +56,6 @@ func main() {
 
 		byteValue, _ := ioutil.ReadAll(jsonFile)
 
-		var result WordsResponse
-		var output WordsResponse
 		err = json.Unmarshal(byteValue, &result)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
@@ -75,8 +74,6 @@ func main() {
 
 		byteValue, _ := ioutil.ReadAll(jsonFile)
 
-		var result WordsResponse
-		var output WordsResponse
 		err = json.Unmarshal(byteValue, &result)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
