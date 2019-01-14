@@ -1,7 +1,7 @@
 {
   "comment": "",
   "ignore": "test",
-  "heroku.goversion": "go1.11.4",
+  "heroku.goVersion": "go1.11.4",
   "package": [
     {
       "checksumSHA1": "7LyTr+zdkO5pd/DzX6RHR2QwS9w=",
