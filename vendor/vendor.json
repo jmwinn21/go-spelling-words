@@ -3,7 +3,7 @@
   "ignore": "test",
   "heroku": {
     "goVersion": "go1.11.4",
-    "install": ["./.."]
+    "install": ["./..."]
   },
   "package": [
     {
